@@ -1,0 +1,1538 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BURGER CRAFT • Central Executiva, KDS da Cozinha & Gestão em Tempo Real</title>
+
+  <!-- Fontes Oficiais: Syne, Plus Jakarta Sans e JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --fundo-escuro: #0E0D0C;
+      --fundo-painel: #161412;
+      --fundo-card: #1D1A17;
+      --fundo-card-hover: #26221E;
+      --ouro-cheddar: #E9A52E;
+      --ouro-brilho: #FFB830;
+      --ouro-escuro: #9E7020;
+      --verde-caixa: #2ECC71;
+      --verde-whats: #25D366;
+      --verde-suave: rgba(46, 204, 113, 0.12);
+      --azul-info: #60A5FA;
+      --azul-suave: rgba(96, 165, 250, 0.12);
+      --amarelo-alerta: #F5B041;
+      --vermelho-kds: #EF4444;
+      --roxo-ia: #A78BFA;
+      --texto-claro: #FAF8F5;
+      --texto-suave: #A89F93;
+      --texto-apagado: #736B61;
+      --borda-ouro: rgba(233, 165, 46, 0.28);
+      --borda-sutil: rgba(255, 255, 255, 0.08);
+      --fonte-titulo: 'Syne', sans-serif;
+      --fonte-corpo: 'Plus Jakarta Sans', sans-serif;
+      --fonte-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--fonte-corpo);
+    }
+
+    body {
+      background-color: var(--fundo-escuro);
+      color: var(--texto-claro);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 10% 12%, rgba(233, 165, 46, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(37, 211, 102, 0.05) 0%, transparent 45%);
+    }
+
+    /* BARRA SUPERIOR DE STATUS */
+    .barra-transparencia-demo {
+      background: linear-gradient(90deg, rgba(233, 165, 46, 0.15), rgba(29, 26, 23, 0.96), rgba(233, 165, 46, 0.15));
+      border-bottom: 1px solid var(--borda-ouro);
+      padding: 8px 4vw;
+      font-size: 0.74rem;
+      color: var(--texto-claro);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .barra-transparencia-demo strong {
+      color: var(--ouro-brilho);
+      font-family: var(--fonte-titulo);
+      letter-spacing: 0.05em;
+    }
+    .badge-status-kds {
+      padding: 3px 10px;
+      border-radius: 4px;
+      background: rgba(37, 211, 102, 0.14);
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: var(--verde-whats);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* CABEÇALHO DO PAINEL */
+    header.topo-dashboard {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(14, 13, 12, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--borda-ouro);
+      padding: 14px 4vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .identidade-painel {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-icone {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--ouro-cheddar), #C88210);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: #1A1715;
+      font-weight: 800;
+      box-shadow: 0 4px 18px rgba(233, 165, 46, 0.35);
+    }
+
+    .titulo-painel h1 {
+      font-family: var(--fonte-titulo);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--texto-claro);
+    }
+    .titulo-painel p {
+      font-size: 0.72rem;
+      color: var(--texto-suave);
+    }
+
+    .acoes-topo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-acao-topo {
+      padding: 9px 15px;
+      border-radius: 4px;
+      border: 1px solid var(--borda-sutil);
+      background: var(--fundo-card);
+      color: var(--texto-claro);
+      text-decoration: none;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-acao-topo:hover {
+      border-color: var(--ouro-cheddar);
+      background: var(--fundo-card-hover);
+      color: var(--ouro-cheddar);
+    }
+
+    .btn-som-topo {
+      padding: 9px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--borda-sutil);
+      background: var(--fundo-card);
+      color: var(--ouro-cheddar);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .btn-som-topo:hover {
+      border-color: var(--ouro-cheddar);
+      background: rgba(233, 165, 46, 0.12);
+    }
+
+    .btn-modo-cozinha {
+      padding: 9px 16px;
+      border-radius: 4px;
+      border: 1px solid var(--vermelho-kds);
+      background: rgba(239, 68, 68, 0.12);
+      color: #F87171;
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-modo-cozinha:hover {
+      background: var(--vermelho-kds);
+      color: #FFF;
+    }
+
+    .btn-destaque-pedido {
+      padding: 9px 18px;
+      border-radius: 4px;
+      border: none;
+      background: linear-gradient(135deg, var(--ouro-cheddar), #C88210);
+      color: #1A1715;
+      font-family: var(--fonte-titulo);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(233, 165, 46, 0.35);
+      transition: all 0.2s;
+    }
+    .btn-destaque-pedido:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(233, 165, 46, 0.5);
+    }
+
+    /* GAVETA INTERATIVA DE NOVO PEDIDO */
+    .gaveta-novo-pedido {
+      display: none;
+      background: linear-gradient(145deg, #24201C 0%, #171512 100%);
+      border: 1.5px solid var(--ouro-cheddar);
+      border-radius: 6px;
+      padding: 22px 26px;
+      margin: 20px 4vw 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      animation: surgirGaveta 0.25s ease-out;
+    }
+    .gaveta-novo-pedido.aberta {
+      display: block;
+    }
+
+    @keyframes surgirGaveta {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .gaveta-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .gaveta-header h3 {
+      font-family: var(--fonte-titulo);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--ouro-cheddar);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-novo-pedido {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1.2fr 1fr auto;
+      gap: 14px;
+      align-items: end;
+    }
+
+    .campo-box label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--ouro-cheddar);
+      margin-bottom: 6px;
+    }
+    .campo-box input, .campo-box select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--borda-sutil);
+      color: var(--texto-claro);
+      font-size: 0.82rem;
+    }
+    .campo-box select option {
+      background: #1D1A17;
+      color: #FAF8F5;
+    }
+
+    .btn-confirmar-pedido {
+      padding: 11px 22px;
+      border-radius: 4px;
+      border: none;
+      background: var(--verde-caixa);
+      color: #121110;
+      font-family: var(--fonte-titulo);
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-confirmar-pedido:hover {
+      background: #27ae60;
+      transform: translateY(-2px);
+    }
+
+    /* CONTAINER PRINCIPAL DO DASHBOARD */
+    .container-dashboard {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px 4vw 60px;
+    }
+
+    /* BLOCO 1: CARDS DE KPIS EXECUTIVOS */
+    .faixa-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .card-kpi {
+      background: linear-gradient(145deg, #1F1C18 0%, #151412 100%);
+      border: 1px solid var(--borda-sutil);
+      border-radius: 6px;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card-kpi:hover {
+      transform: translateY(-3px);
+      border-color: var(--borda-ouro);
+    }
+
+    .card-kpi-topo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-kpi-topo .rotulo {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--texto-suave);
+    }
+    .card-kpi-topo .icone-kpi {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+    }
+
+    .kpi-valor-grande {
+      font-family: var(--fonte-titulo);
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--texto-claro);
+      line-height: 1.1;
+    }
+    .kpi-valor-grande.ouro { color: var(--ouro-cheddar); }
+    .kpi-valor-grande.verde { color: var(--verde-caixa); }
+
+    .kpi-rodape {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.7rem;
+      color: var(--verde-caixa);
+      font-weight: 600;
+    }
+
+    /* BLOCO 2: GRÁFICO, UPSELL DA IA & ESTOQUE CRÍTICO */
+    .grade-meio-dashboard {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .painel-grafico, .painel-ia-upsell, .painel-estoque-critico {
+      background: var(--fundo-card);
+      border: 1px solid var(--borda-sutil);
+      border-radius: 6px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .cabecalho-bloco {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--borda-sutil);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+    }
+    .cabecalho-bloco h3 {
+      font-family: var(--fonte-titulo);
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--ouro-cheddar);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* GRÁFICO DE HORÁRIO DE PICO */
+    .grafico-horarios-barra {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 8px;
+      height: 150px;
+      padding-top: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 8px;
+    }
+    .coluna-grafico {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      height: 100%;
+      justify-content: flex-end;
+    }
+    .barra-preenchimento {
+      width: 100%;
+      background: rgba(233, 165, 46, 0.25);
+      border-radius: 3px 3px 0 0;
+      transition: height 0.4s, background-color 0.2s;
+    }
+    .coluna-grafico:hover .barra-preenchimento {
+      background: var(--ouro-cheddar);
+    }
+    .coluna-grafico.pico .barra-preenchimento {
+      background: linear-gradient(to top, var(--ouro-cheddar), var(--ouro-brilho));
+    }
+    .label-hora {
+      font-size: 0.65rem;
+      color: var(--texto-suave);
+      font-family: var(--fonte-mono);
+    }
+
+    /* CARD DE UPSELL IA */
+    .box-lucro-ia {
+      background: rgba(233, 165, 46, 0.08);
+      border: 1px solid var(--borda-ouro);
+      border-radius: 6px;
+      padding: 14px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .box-lucro-ia .num-lucro {
+      font-family: var(--fonte-titulo);
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--ouro-cheddar);
+    }
+    .box-lucro-ia .desc-lucro {
+      font-size: 0.68rem;
+      color: var(--texto-suave);
+      margin-top: 2px;
+    }
+
+    .item-metrica-ia {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.74rem;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .item-metrica-ia strong {
+      color: var(--verde-caixa);
+    }
+
+    /* CARD DE ESTOQUE CRÍTICO */
+    .item-insumo-estoque {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+    .insumo-cab {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .insumo-cab .qtd.critico {
+      color: var(--vermelho-kds);
+      animation: pulsarAlerta 1.5s infinite;
+    }
+    .insumo-cab .qtd.ok {
+      color: var(--verde-caixa);
+    }
+    .barra-estoque-bg {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .barra-estoque-fill {
+      height: 100%;
+      border-radius: 4px;
+    }
+    .barra-estoque-fill.critico {
+      background: var(--vermelho-kds);
+    }
+    .barra-estoque-fill.ok {
+      background: var(--ouro-cheddar);
+    }
+
+    @keyframes pulsarAlerta {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* BLOCO 3: LOGÍSTICA DE ENTREGADORES & CLIENTES PARA RESGATE */
+    .grade-logistica-fidelidade {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .card-motoboys, .card-resgate-clientes {
+      background: var(--fundo-card);
+      border: 1px solid var(--borda-sutil);
+      border-radius: 6px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .item-motoboy-linha {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: #141311;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .motoboy-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .tag-motoboy {
+      font-size: 0.68rem;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+    .tag-motoboy.em-rota {
+      background: rgba(96, 165, 250, 0.15);
+      color: #93C5FD;
+      border: 1px solid rgba(96, 165, 250, 0.35);
+    }
+    .tag-motoboy.disponivel {
+      background: rgba(46, 204, 113, 0.15);
+      color: #4ADE80;
+      border: 1px solid rgba(46, 204, 113, 0.35);
+    }
+
+    .item-resgate-linha {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: #141311;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .btn-disparo-resgate {
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      background: rgba(37, 211, 102, 0.12);
+      color: var(--verde-whats);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-disparo-resgate:hover {
+      background: var(--verde-whats);
+      color: #121110;
+    }
+
+    /* BLOCO 4: TABELA DE PEDIDOS EM TEMPO REAL COM CRONÔMETRO VIVO */
+    .painel-tabela-pedidos {
+      background: var(--fundo-card);
+      border: 1px solid var(--borda-sutil);
+      border-radius: 6px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .filtros-tabela {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-filtro {
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--borda-sutil);
+      background: transparent;
+      color: var(--texto-suave);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-filtro.ativo, .btn-filtro:hover {
+      border-color: var(--ouro-cheddar);
+      color: var(--ouro-cheddar);
+      background: rgba(233, 165, 46, 0.08);
+    }
+
+    .tabela-pedidos-wrap {
+      overflow-x: auto;
+      margin-top: 14px;
+    }
+
+    table.tabela-pedidos {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.8rem;
+    }
+
+    table.tabela-pedidos th {
+      padding: 12px 14px;
+      color: var(--texto-suave);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    table.tabela-pedidos td {
+      padding: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--texto-claro);
+    }
+
+    table.tabela-pedidos tr:hover td {
+      background: rgba(233, 165, 46, 0.04);
+    }
+
+    /* CRONÔMETRO VIVO NA TABELA */
+    .cronometro-tempo {
+      font-family: var(--fonte-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .cronometro-tempo.tempo-verde {
+      background: rgba(46, 204, 113, 0.14);
+      color: #4ADE80;
+      border: 1px solid rgba(46, 204, 113, 0.3);
+    }
+    .cronometro-tempo.tempo-amarelo {
+      background: rgba(245, 176, 65, 0.14);
+      color: #FBBF24;
+      border: 1px solid rgba(245, 176, 65, 0.3);
+    }
+    .cronometro-tempo.tempo-vermelho {
+      background: rgba(239, 68, 68, 0.18);
+      color: #F87171;
+      border: 1px solid var(--vermelho-kds);
+      animation: pulsarAlerta 1.2s infinite;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-status.chapa {
+      background: rgba(239, 68, 68, 0.15);
+      color: #F87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .badge-status.entrega {
+      background: rgba(96, 165, 250, 0.15);
+      color: #93C5FD;
+      border: 1px solid rgba(96, 165, 250, 0.35);
+    }
+    .badge-status.concluido {
+      background: rgba(46, 204, 113, 0.15);
+      color: #4ADE80;
+      border: 1px solid rgba(46, 204, 113, 0.35);
+    }
+
+    .acoes-tabela-col {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-mudar-status {
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--texto-claro);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-mudar-status:hover {
+      border-color: var(--ouro-cheddar);
+      color: var(--ouro-cheddar);
+    }
+
+    .btn-imprimir-comanda {
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--borda-sutil);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--texto-suave);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-imprimir-comanda:hover {
+      color: var(--ouro-cheddar);
+      border-color: var(--ouro-cheddar);
+    }
+
+    /* MODAL DE IMPRESSÃO DA COMANDA TÉRMICA */
+    .modal-comanda-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-comanda-overlay.ativo {
+      display: flex;
+    }
+
+    .comanda-termica-box {
+      width: 320px;
+      background: #FFF;
+      color: #000;
+      font-family: var(--fonte-mono);
+      padding: 24px 20px;
+      border-radius: 4px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      font-size: 0.74rem;
+      line-height: 1.45;
+    }
+    .comanda-termica-box * { font-family: var(--fonte-mono) !important; color: #000 !important; }
+    .comanda-cabecalho { text-align: center; border-bottom: 1px dashed #000; padding-bottom: 10px; margin-bottom: 10px; }
+    .comanda-cabecalho h2 { font-size: 1rem; font-weight: 800; }
+    .comanda-itens-lista { border-bottom: 1px dashed #000; padding-bottom: 10px; margin-bottom: 10px; }
+    .comanda-item-linha { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .comanda-total-linha { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800; margin-bottom: 12px; }
+
+    .comanda-botoes {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .btn-print-action {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 3px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 0.76rem;
+    }
+    .btn-print-action.primario { background: #000; color: #FFF !important; }
+    .btn-print-action.secundario { background: #E5E5E5; color: #000 !important; }
+
+    /* MODO COZINHA (KDS FULLSCREEN) */
+    body.modo-cozinha-ativo .barra-transparencia-demo,
+    body.modo-cozinha-ativo .faixa-kpis,
+    body.modo-cozinha-ativo .grade-meio-dashboard,
+    body.modo-cozinha-ativo .grade-logistica-fidelidade {
+      display: none !important;
+    }
+    body.modo-cozinha-ativo .painel-tabela-pedidos {
+      margin-top: 10px;
+    }
+    body.modo-cozinha-ativo table.tabela-pedidos {
+      font-size: 1.05rem;
+    }
+    body.modo-cozinha-ativo table.tabela-pedidos td {
+      padding: 20px 16px;
+    }
+    body.modo-cozinha-ativo .cronometro-tempo {
+      font-size: 1rem;
+      padding: 6px 12px;
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 1024px) {
+      .faixa-kpis { grid-template-columns: repeat(2, 1fr); }
+      .grade-meio-dashboard { grid-template-columns: 1fr; }
+      .grade-logistica-fidelidade { grid-template-columns: 1fr; }
+      .form-novo-pedido { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .faixa-kpis { grid-template-columns: 1fr; }
+      .form-novo-pedido { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE STATUS SUPERIOR -->
+  <div class="barra-transparencia-demo">
+    <div>
+      <strong>BURGER CRAFT OS</strong> • Central de Gestão & KDS da Chapa em Tempo Real
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span class="badge-status-kds">● Cozinha & KDS Ativos</span>
+      <span style="font-size: 0.7rem; color: var(--texto-suave);">Sincronização em tempo real (0.8s)</span>
+    </div>
+  </div>
+
+  <!-- CABEÇALHO DO PAINEL -->
+  <header class="topo-dashboard">
+    <div class="identidade-painel">
+      <div class="logo-icone">🍔</div>
+      <div class="titulo-painel">
+        <h1>Painel Executivo & Inteligência de Delivery</h1>
+        <p>Acompanhamento de Vendas, Produção na Chapa e Atendimento Automatizado</p>
+      </div>
+    </div>
+
+    <div class="acoes-topo">
+      <button type="button" class="btn-som-topo" id="btnAlternarSom" title="Alternar som de novo pedido">🔔 Som Ativo</button>
+      
+      <button type="button" class="btn-modo-cozinha" id="btnModoCozinha">
+        <span>📺 Modo Cozinha KDS</span>
+      </button>
+
+      <a href="hamburgueria.html" class="btn-acao-topo">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Cardápio</span>
+      </a>
+
+      <a href="fluxo-hamburgueria.html" class="btn-acao-topo">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        <span>Fluxo IA n8n</span>
+      </a>
+
+      <button type="button" class="btn-destaque-pedido" id="btnToggleGaveta">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>Simular Pedido</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- GAVETA INTERATIVA DE NOVO PEDIDO -->
+  <div class="gaveta-novo-pedido" id="gavetaPedido">
+    <div class="gaveta-header">
+      <h3>
+        <span>⚡ Simulação de Entrada de Pedido via WhatsApp</span>
+      </h3>
+      <span style="font-size: 0.72rem; color: var(--texto-suave);">Ao registrar, toca o sino da cozinha e atualiza os KPIs</span>
+    </div>
+
+    <form class="form-novo-pedido" id="formNovoPedido">
+      <div class="campo-box">
+        <label>Nome do Cliente</label>
+        <input type="text" id="inpCliente" placeholder="Ex: Lucas Silveira" required />
+      </div>
+
+      <div class="campo-box">
+        <label>Hambúrguer Principal</label>
+        <select id="selBurger">
+          <option value="Grand Cheddar Duplo Angus|38">Grand Cheddar Duplo Angus (R$ 38)</option>
+          <option value="Smash Burger Crocante|29">Smash Burger Crocante (R$ 29)</option>
+          <option value="Combo Completo Artesanal|49" selected>Combo Completo Artesanal (R$ 49)</option>
+          <option value="Hambúrguer Doce & Morango|28">Hambúrguer Doce & Morango (R$ 28)</option>
+        </select>
+      </div>
+
+      <div class="campo-box">
+        <label>Acompanhamento / Adicional</label>
+        <select id="selExtra">
+          <option value="Nenhum|0">Sem adicional (+R$ 0)</option>
+          <option value="Batata Rústica Cheddar & Bacon|24" selected>Batata Rústica c/ Cheddar & Bacon (+R$ 24)</option>
+          <option value="Milk Shake Artesanal Nobre|22">Milk Shake Artesanal Nobre (+R$ 22)</option>
+          <option value="Cheddar Duplo Extra|8">Cheddar Duplo Extra (+R$ 8)</option>
+        </select>
+      </div>
+
+      <div class="campo-box">
+        <label>Forma de Pagamento</label>
+        <select id="selPagamento">
+          <option value="Pix Instantâneo">Pix Instantâneo (Z-API)</option>
+          <option value="Cartão de Crédito">Cartão de Crédito (Entrega)</option>
+          <option value="Dinheiro">Dinheiro (com troco)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-confirmar-pedido">
+        <span>✔ Registrar Pedido</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- CORPO DO PAINEL DE GESTÃO -->
+  <main class="container-dashboard">
+    
+    <!-- BLOCO 1: INDICADORES EXECUTIVOS (KPIS) -->
+    <section class="faixa-kpis" aria-label="Indicadores Chave">
+      
+      <div class="card-kpi">
+        <div class="card-kpi-topo">
+          <span class="rotulo">Faturamento do Dia</span>
+          <div class="icone-kpi" style="background: rgba(233, 165, 46, 0.15); color: var(--ouro-cheddar);">💰</div>
+        </div>
+        <div class="kpi-valor-grande ouro" id="kpiFaturamento">R$ 7.420,00</div>
+        <div class="kpi-rodape">
+          <span>▲ +22.4%</span>
+          <span style="color: var(--texto-suave);">vs mesma data semana passada</span>
+        </div>
+      </div>
+
+      <div class="card-kpi">
+        <div class="card-kpi-topo">
+          <span class="rotulo">Total de Pedidos Hoje</span>
+          <div class="icone-kpi" style="background: rgba(96, 165, 250, 0.15); color: var(--azul-info);">🍔</div>
+        </div>
+        <div class="kpi-valor-grande" id="kpiPedidos">124</div>
+        <div class="kpi-rodape">
+          <span style="color: var(--verde-caixa);">● 112 via WhatsApp Automático</span>
+        </div>
+      </div>
+
+      <div class="card-kpi">
+        <div class="card-kpi-topo">
+          <span class="rotulo">Ticket Médio</span>
+          <div class="icone-kpi" style="background: rgba(46, 204, 113, 0.15); color: var(--verde-caixa);">📈</div>
+        </div>
+        <div class="kpi-valor-grande verde" id="kpiTicket">R$ 59,83</div>
+        <div class="kpi-rodape">
+          <span>▲ +R$ 14,20</span>
+          <span style="color: var(--texto-suave);">induzido por Upsell da IA</span>
+        </div>
+      </div>
+
+      <div class="card-kpi">
+        <div class="card-kpi-topo">
+          <span class="rotulo">Tempo Médio na Chapa</span>
+          <div class="icone-kpi" style="background: rgba(239, 68, 68, 0.15); color: var(--vermelho-kds);">⏱️</div>
+        </div>
+        <div class="kpi-valor-grande">11 min</div>
+        <div class="kpi-rodape">
+          <span>▼ -4 min</span>
+          <span style="color: var(--texto-suave);">agilidade KDS integrada</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- BLOCO 2: GRÁFICO, UPSELL DA IA & ESTOQUE CRÍTICO -->
+    <section class="grade-meio-dashboard">
+      
+      <!-- Gráfico de Horários -->
+      <div class="painel-grafico">
+        <div class="cabecalho-bloco">
+          <h3>
+            <span>📊 Volume por Faixa de Horário</span>
+          </h3>
+          <span style="font-size: 0.72rem; color: var(--texto-suave);">Pico entre 20h00 e 22h00</span>
+        </div>
+
+        <div class="grafico-horarios-barra">
+          <div class="coluna-grafico"><div class="barra-preenchimento" style="height: 25%;"></div><span class="label-hora">18h</span></div>
+          <div class="coluna-grafico"><div class="barra-preenchimento" style="height: 48%;"></div><span class="label-hora">19h</span></div>
+          <div class="coluna-grafico pico"><div class="barra-preenchimento" style="height: 94%;"></div><span class="label-hora">20h</span></div>
+          <div class="coluna-grafico pico"><div class="barra-preenchimento" style="height: 100%;"></div><span class="label-hora">21h</span></div>
+          <div class="coluna-grafico"><div class="barra-preenchimento" style="height: 72%;"></div><span class="label-hora">22h</span></div>
+          <div class="coluna-grafico"><div class="barra-preenchimento" style="height: 38%;"></div><span class="label-hora">23h</span></div>
+        </div>
+      </div>
+
+      <!-- Vendas Induzidas pela IA -->
+      <div class="painel-ia-upsell">
+        <div class="cabecalho-bloco">
+          <h3>
+            <span>🧠 Vendas Geradas por IA</span>
+          </h3>
+          <span style="font-size: 0.7rem; color: var(--ouro-cheddar);">Motor de Upsell</span>
+        </div>
+
+        <div class="box-lucro-ia">
+          <div class="num-lucro" id="valUpsellIa">+R$ 1.840,00</div>
+          <div class="desc-lucro">Receita adicional criada apenas pela sugestão inteligente</div>
+        </div>
+
+        <div class="item-metrica-ia">
+          <span>Aceitação de Batata Extra:</span>
+          <strong>74%</strong>
+        </div>
+        <div class="item-metrica-ia">
+          <span>Aceitação de Milk Shake Nobre:</span>
+          <strong>48%</strong>
+        </div>
+        <div class="item-metrica-ia">
+          <span>Conversão de Lanche para Combo:</span>
+          <strong>66%</strong>
+        </div>
+      </div>
+
+      <!-- Estoque Crítico de Insumos -->
+      <div class="painel-estoque-critico">
+        <div class="cabecalho-bloco">
+          <h3>
+            <span>📦 Estoque de Insumos</span>
+          </h3>
+          <span style="font-size: 0.7rem; color: var(--vermelho-kds);">Monitor Chapa</span>
+        </div>
+
+        <div class="item-insumo-estoque">
+          <div class="insumo-cab"><span>Pão Brioche Selado:</span><span class="qtd critico">18 un (Repor!)</span></div>
+          <div class="barra-estoque-bg"><div class="barra-estoque-fill critico" style="width: 20%;"></div></div>
+        </div>
+
+        <div class="item-insumo-estoque">
+          <div class="insumo-cab"><span>Blend Angus 180g:</span><span class="qtd critico">22 un (Baixo)</span></div>
+          <div class="barra-estoque-bg"><div class="barra-estoque-fill critico" style="width: 25%;"></div></div>
+        </div>
+
+        <div class="item-insumo-estoque">
+          <div class="insumo-cab"><span>Cheddar Inglês Cremoso:</span><span class="qtd ok">8.5 kg (OK)</span></div>
+          <div class="barra-estoque-bg"><div class="barra-estoque-fill ok" style="width: 82%;"></div></div>
+        </div>
+
+        <div class="item-insumo-estoque">
+          <div class="insumo-cab"><span>Batatas Rústicas Selecionadas:</span><span class="qtd ok">14 kg (OK)</span></div>
+          <div class="barra-estoque-bg"><div class="barra-estoque-fill ok" style="width: 70%;"></div></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- BLOCO 3: LOGÍSTICA DE ENTREGADORES & CLIENTES PARA RESGATE -->
+    <section class="grade-logistica-fidelidade">
+      
+      <!-- Controle de Motoboys -->
+      <div class="card-motoboys">
+        <div class="cabecalho-bloco">
+          <h3>
+            <span>🛵 Entregadores em Operação</span>
+          </h3>
+          <span style="font-size: 0.72rem; color: var(--texto-suave);">3 Ativos na Noite</span>
+        </div>
+
+        <div class="item-motoboy-linha">
+          <div class="motoboy-info">
+            <span>Rafael Lima</span>
+            <span class="tag-motoboy em-rota">2 Entregas em Rota</span>
+          </div>
+          <span style="font-size: 0.72rem; color: var(--ouro-cheddar);">Retorno ~12 min</span>
+        </div>
+
+        <div class="item-motoboy-linha">
+          <div class="motoboy-info">
+            <span>Bruno Henrique</span>
+            <span class="tag-motoboy disponivel">🟢 Disponível na Base</span>
+          </div>
+          <span style="font-size: 0.72rem; color: var(--verde-caixa);">Próxima Saída</span>
+        </div>
+
+        <div class="item-motoboy-linha">
+          <div class="motoboy-info">
+            <span>Thiago Rocha</span>
+            <span class="tag-motoboy em-rota">1 Entrega em Rota</span>
+          </div>
+          <span style="font-size: 0.72rem; color: var(--ouro-cheddar);">Retorno ~6 min</span>
+        </div>
+      </div>
+
+      <!-- Clientes em Risco / Resgate com 1 Clique -->
+      <div class="card-resgate-clientes">
+        <div class="cabecalho-bloco">
+          <h3>
+            <span>⭐ Clientes Fiéis para Reconectar</span>
+          </h3>
+          <span style="font-size: 0.72rem; color: var(--ouro-cheddar);">Sem pedir há >15 dias</span>
+        </div>
+
+        <div class="item-resgate-linha">
+          <div>
+            <div style="font-size: 0.78rem; font-weight: 700;">Camila Souza</div>
+            <div style="font-size: 0.68rem; color: var(--texto-suave);">8 pedidos • Último há 18 dias</div>
+          </div>
+          <button type="button" class="btn-disparo-resgate" onclick="dispararResgate('Camila Souza')">
+            <span>Enviar Cupom 15%</span>
+          </button>
+        </div>
+
+        <div class="item-resgate-linha">
+          <div>
+            <div style="font-size: 0.78rem; font-weight: 700;">Daniel Albuquerque</div>
+            <div style="font-size: 0.68rem; color: var(--texto-suave);">5 pedidos • Último há 21 dias</div>
+          </div>
+          <button type="button" class="btn-disparo-resgate" onclick="dispararResgate('Daniel Albuquerque')">
+            <span>Enviar Cupom 15%</span>
+          </button>
+        </div>
+
+        <div class="item-resgate-linha">
+          <div>
+            <div style="font-size: 0.78rem; font-weight: 700;">Larissa Fontes</div>
+            <div style="font-size: 0.68rem; color: var(--texto-suave);">12 pedidos • Último há 25 dias</div>
+          </div>
+          <button type="button" class="btn-disparo-resgate" onclick="dispararResgate('Larissa Fontes')">
+            <span>Enviar Cupom 15%</span>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- BLOCO 4: TABELA DE PEDIDOS COM CRONÔMETRO VIVO NA CHAPA -->
+    <section class="painel-tabela-pedidos">
+      <div class="cabecalho-bloco">
+        <h3>
+          <span>🛎️ Pedidos Recentes & Monitor KDS (Cronômetro Vivo)</span>
+        </h3>
+        <div class="filtros-tabela">
+          <button type="button" class="btn-filtro ativo" onclick="filtrarStatus('todos', this)">Todos</button>
+          <button type="button" class="btn-filtro" onclick="filtrarStatus('chapa', this)">Na Chapa</button>
+          <button type="button" class="btn-filtro" onclick="filtrarStatus('entrega', this)">Em Entrega</button>
+          <button type="button" class="btn-filtro" onclick="filtrarStatus('concluido', this)">Concluídos</button>
+        </div>
+      </div>
+
+      <div class="tabela-pedidos-wrap">
+        <table class="tabela-pedidos" id="tabelaPedidos">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tempo Decorrido</th>
+              <th>Cliente</th>
+              <th>Itens Selecionados</th>
+              <th>Valor Total</th>
+              <th>Pagamento</th>
+              <th>Status Cozinha</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyPedidos">
+            <tr data-status="chapa" data-segundos="210">
+              <td><strong>#1088</strong></td>
+              <td><span class="cronometro-tempo tempo-verde">⏱️ 03:30</span></td>
+              <td>Mariana Costa</td>
+              <td>Grand Cheddar Duplo + Milk Shake Nobre</td>
+              <td><strong style="color: var(--ouro-cheddar);">R$ 60,00</strong></td>
+              <td>Pix Instantâneo</td>
+              <td><span class="badge-status chapa">● Na Chapa</span></td>
+              <td>
+                <div class="acoes-tabela-col">
+                  <button type="button" class="btn-mudar-status" onclick="avancarStatus(this)">Despachar 🛵</button>
+                  <button type="button" class="btn-imprimir-comanda" title="Imprimir comanda térmica" onclick="abrirComanda('#1088', 'Mariana Costa', 'Grand Cheddar Duplo Angus 180g (Ao ponto) + Milk Shake Artesanal Nobre', 'R$ 60,00', 'Pix Instantâneo')">🖨️</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr data-status="entrega" data-segundos="620">
+              <td><strong>#1087</strong></td>
+              <td><span class="cronometro-tempo tempo-amarelo">⏱️ 10:20</span></td>
+              <td>Rodrigo Ramos</td>
+              <td>Combo Completo Artesanal</td>
+              <td><strong style="color: var(--ouro-cheddar);">R$ 49,00</strong></td>
+              <td>Cartão (Entrega)</td>
+              <td><span class="badge-status entrega">● Em Rota</span></td>
+              <td>
+                <div class="acoes-tabela-col">
+                  <button type="button" class="btn-mudar-status" onclick="avancarStatus(this)">Concluir ✔</button>
+                  <button type="button" class="btn-imprimir-comanda" title="Imprimir comanda térmica" onclick="abrirComanda('#1087', 'Rodrigo Ramos', 'Combo Completo Artesanal (Hambúrguer + Batata + Refri)', 'R$ 49,00', 'Cartão Crédito')">🖨️</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr data-status="chapa" data-segundos="940">
+              <td><strong>#1086</strong></td>
+              <td><span class="cronometro-tempo tempo-vermelho">⏱️ 15:40</span></td>
+              <td>Felipe Guimarães</td>
+              <td>2x Smash Burger + Batata com Cheddar</td>
+              <td><strong style="color: var(--ouro-cheddar);">R$ 82,00</strong></td>
+              <td>Pix Instantâneo</td>
+              <td><span class="badge-status chapa">● Na Chapa</span></td>
+              <td>
+                <div class="acoes-tabela-col">
+                  <button type="button" class="btn-mudar-status" onclick="avancarStatus(this)">Despachar 🛵</button>
+                  <button type="button" class="btn-imprimir-comanda" title="Imprimir comanda térmica" onclick="abrirComanda('#1086', 'Felipe Guimarães', '2x Smash Burger Crocante + Batatas Rústicas com Cheddar', 'R$ 82,00', 'Pix Instantâneo')">🖨️</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr data-status="concluido" data-segundos="1680">
+              <td><strong>#1085</strong></td>
+              <td><span class="cronometro-tempo tempo-verde">✔ 28:00</span></td>
+              <td>Beatriz Viana</td>
+              <td>Grand Cheddar Duplo + Hambúrguer Doce</td>
+              <td><strong style="color: var(--ouro-cheddar);">R$ 66,00</strong></td>
+              <td>Pix Instantâneo</td>
+              <td><span class="badge-status concluido">✔ Entregue</span></td>
+              <td>
+                <div class="acoes-tabela-col">
+                  <span style="font-size: 0.68rem; color: var(--verde-caixa);">Finalizado</span>
+                  <button type="button" class="btn-imprimir-comanda" title="Reimprimir comanda" onclick="abrirComanda('#1085', 'Beatriz Viana', 'Grand Cheddar Duplo + Hambúrguer Doce & Morango', 'R$ 66,00', 'Pix Instantâneo')">🖨️</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr data-status="concluido" data-segundos="2400">
+              <td><strong>#1084</strong></td>
+              <td><span class="cronometro-tempo tempo-verde">✔ 40:00</span></td>
+              <td>Carlos Mendonça</td>
+              <td>Combo Completo + Milk Shake Nobre</td>
+              <td><strong style="color: var(--ouro-cheddar);">R$ 71,00</strong></td>
+              <td>Pix Instantâneo</td>
+              <td><span class="badge-status concluido">✔ Entregue</span></td>
+              <td>
+                <div class="acoes-tabela-col">
+                  <span style="font-size: 0.68rem; color: var(--verde-caixa);">Finalizado</span>
+                  <button type="button" class="btn-imprimir-comanda" title="Reimprimir comanda" onclick="abrirComanda('#1084', 'Carlos Mendonça', 'Combo Completo Artesanal + Milk Shake Nobre', 'R$ 71,00', 'Pix Instantâneo')">🖨️</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DE IMPRESSÃO DA COMANDA TÉRMICA -->
+  <div class="modal-comanda-overlay" id="modalComanda">
+    <div class="comanda-termica-box">
+      <div class="comanda-cabecalho">
+        <h2>BURGER CRAFT</h2>
+        <p>COZINHA & CHAPA ARTESANAL</p>
+        <p id="comandaDataHora">02/11/2026 - 22:25</p>
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <p><strong>COMANDA: <span id="comandaId">#1088</span></strong></p>
+        <p>CLIENTE: <span id="comandaCliente">Mariana Costa</span></p>
+        <p>CANAL: WhatsApp Delivery Oficial</p>
+      </div>
+
+      <div class="comanda-itens-lista">
+        <p><strong>ITENS DO PEDIDO:</strong></p>
+        <p id="comandaItens" style="white-space: pre-wrap; margin-top: 4px;">Grand Cheddar Duplo Angus 180g (Ao ponto)\n+ Milk Shake Artesanal Nobre</p>
+      </div>
+
+      <div class="comanda-total-linha">
+        <span>TOTAL A RECEBER:</span>
+        <span id="comandaTotal">R$ 60,00</span>
+      </div>
+      <p>PAGAMENTO: <strong id="comandaPagamento">Pix Instantâneo</strong></p>
+      <p style="text-align: center; margin-top: 10px; font-size: 0.65rem;">*** PREPARAR COM EXCELÊNCIA ***</p>
+
+      <div class="comanda-botoes">
+        <button type="button" class="btn-print-action primario" onclick="window.print()">🖨️ Imprimir</button>
+        <button type="button" class="btn-print-action secundario" onclick="fecharComanda()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // SINTETIZADOR DE ÁUDIO NATIVO: SINO DE COZINHA (DING-DONG)
+    let somAtivado = true;
+    const btnSom = document.getElementById('btnAlternarSom');
+
+    btnSom.addEventListener('click', () => {
+      somAtivado = !somAtivado;
+      btnSom.textContent = somAtivado ? '🔔 Som Ativo' : '🔕 Som Mudo';
+      btnSom.style.color = somAtivado ? 'var(--ouro-cheddar)' : 'var(--texto-suave)';
+    });
+
+    function tocarSinoCozinha() {
+      if (!somAtivado) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const now = ctx.currentTime;
+
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(880, now);
+        gain1.gain.setValueAtTime(0.25, now);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.7);
+
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(1320, now + 0.1);
+        gain2.gain.setValueAtTime(0.2, now + 0.1);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 1.1);
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start(now + 0.1);
+        osc2.stop(now + 1.1);
+      } catch (err) {}
+    }
+
+    // CRONÔMETRO VIVO NA TABELA
+    setInterval(() => {
+      const linhas = document.querySelectorAll('#tbodyPedidos tr');
+      linhas.forEach(linha => {
+        const status = linha.getAttribute('data-status');
+        if (status === 'concluido') return;
+
+        let segs = parseInt(linha.getAttribute('data-segundos') || '0', 10);
+        segs++;
+        linha.setAttribute('data-segundos', segs);
+
+        const m = Math.floor(segs / 60);
+        const s = segs % 60;
+        const txt = `⏱️ ${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+
+        const cronEl = linha.querySelector('.cronometro-tempo');
+        if (cronEl) {
+          cronEl.textContent = txt;
+          cronEl.className = 'cronometro-tempo';
+          if (segs < 480) {
+            cronEl.classList.add('tempo-verde');
+          } else if (segs < 900) {
+            cronEl.classList.add('tempo-amarelo');
+          } else {
+            cronEl.classList.add('tempo-vermelho');
+          }
+        }
+      });
+    }, 1000);
+
+    // MODO COZINHA (KDS)
+    const btnModo = document.getElementById('btnModoCozinha');
+    btnModo.addEventListener('click', () => {
+      document.body.classList.toggle('modo-cozinha-ativo');
+      const ativo = document.body.classList.contains('modo-cozinha-ativo');
+      btnModo.textContent = ativo ? '✕ Sair Modo Cozinha' : '📺 Modo Cozinha KDS';
+    });
+
+    // ABERTURA / FECHAMENTO DA GAVETA DE PEDIDO TESTE
+    const btnToggle = document.getElementById('btnToggleGaveta');
+    const gaveta = document.getElementById('gavetaPedido');
+
+    btnToggle.addEventListener('click', () => {
+      gaveta.classList.toggle('aberta');
+    });
+
+    // INSERÇÃO INTERATIVA DE NOVO PEDIDO
+    let proximoId = 1089;
+    let totalFaturamento = 7420;
+    let totalPedidos = 124;
+
+    const form = document.getElementById('formNovoPedido');
+    const tbody = document.getElementById('tbodyPedidos');
+    const kpiFat = document.getElementById('kpiFaturamento');
+    const kpiPed = document.getElementById('kpiPedidos');
+    const kpiTic = document.getElementById('kpiTicket');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const cliente = document.getElementById('inpCliente').value.trim();
+      const burgerData = document.getElementById('selBurger').value.split('|');
+      const extraData = document.getElementById('selExtra').value.split('|');
+      const pagamento = document.getElementById('selPagamento').value;
+
+      const burgerNome = burgerData[0];
+      const burgerPreco = parseFloat(burgerData[1]);
+
+      const extraNome = extraData[0];
+      const extraPreco = parseFloat(extraData[1]);
+
+      const precoTotal = burgerPreco + extraPreco;
+      const itensTexto = extraPreco > 0 ? `${burgerNome} + ${extraNome}` : burgerNome;
+
+      // Toca o sino da cozinha
+      tocarSinoCozinha();
+
+      // Cria a nova linha da tabela no topo
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-status', 'chapa');
+      tr.setAttribute('data-segundos', '0');
+      tr.innerHTML = `
+        <td><strong>#${proximoId}</strong></td>
+        <td><span class="cronometro-tempo tempo-verde">⏱️ 00:00</span></td>
+        <td>${cliente}</td>
+        <td>${itensTexto}</td>
+        <td><strong style="color: var(--ouro-cheddar);">R$ ${precoTotal.toFixed(2).replace('.', ',')}</strong></td>
+        <td>${pagamento}</td>
+        <td><span class="badge-status chapa">● Na Chapa</span></td>
+        <td>
+          <div class="acoes-tabela-col">
+            <button type="button" class="btn-mudar-status" onclick="avancarStatus(this)">Despachar 🛵</button>
+            <button type="button" class="btn-imprimir-comanda" title="Imprimir comanda térmica" onclick="abrirComanda('#${proximoId}', '${cliente}', '${itensTexto}', 'R$ ${precoTotal.toFixed(2).replace('.', ',')}', '${pagamento}')">🖨️</button>
+          </div>
+        </td>
+      `;
+
+      tbody.insertBefore(tr, tbody.firstChild);
+
+      // Atualiza contadores e KPIs
+      proximoId++;
+      totalPedidos++;
+      totalFaturamento += precoTotal;
+
+      kpiFat.textContent = totalFaturamento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      kpiPed.textContent = totalPedidos;
+      const novoTicket = totalFaturamento / totalPedidos;
+      kpiTic.textContent = novoTicket.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+      // Limpa e fecha a gaveta
+      document.getElementById('inpCliente').value = '';
+      gaveta.classList.remove('aberta');
+    });
+
+    // AVANÇO DE STATUS DO PEDIDO
+    function avancarStatus(btn) {
+      const tr = btn.closest('tr');
+      const statusAtual = tr.getAttribute('data-status');
+
+      if (statusAtual === 'chapa') {
+        tr.setAttribute('data-status', 'entrega');
+        tr.querySelector('.badge-status').className = 'badge-status entrega';
+        tr.querySelector('.badge-status').innerHTML = '● Em Rota';
+        btn.textContent = 'Concluir ✔';
+      } else if (statusAtual === 'entrega') {
+        tr.setAttribute('data-status', 'concluido');
+        tr.querySelector('.badge-status').className = 'badge-status concluido';
+        tr.querySelector('.badge-status').innerHTML = '✔ Entregue';
+        
+        const cron = tr.querySelector('.cronometro-tempo');
+        if (cron) {
+          cron.className = 'cronometro-tempo tempo-verde';
+          cron.innerHTML = '✔ Entregue';
+        }
+
+        btn.parentElement.innerHTML = `
+          <span style="font-size: 0.68rem; color: var(--verde-caixa);">Finalizado</span>
+          <button type="button" class="btn-imprimir-comanda" title="Reimprimir comanda" onclick="abrirComanda('#${tr.children[0].textContent.trim()}', '${tr.children[2].textContent.trim()}', '${tr.children[3].textContent.trim()}', '${tr.children[4].textContent.trim()}', '${tr.children[5].textContent.trim()}')">🖨️</button>
+        `;
+      }
+    }
+
+    // FILTRO DE PEDIDOS NA TABELA
+    function filtrarStatus(status, btn) {
+      document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('ativo'));
+      btn.classList.add('ativo');
+
+      const linhas = document.querySelectorAll('#tbodyPedidos tr');
+      linhas.forEach(linha => {
+        if (status === 'todos' || linha.getAttribute('data-status') === status) {
+          linha.style.display = '';
+        } else {
+          linha.style.display = 'none';
+        }
+      });
+    }
+
+    // MODAL DE COMANDA TÉRMICA
+    const modalComanda = document.getElementById('modalComanda');
+    function abrirComanda(id, cliente, itens, total, pagamento) {
+      document.getElementById('comandaId').textContent = id;
+      document.getElementById('comandaCliente').textContent = cliente;
+      document.getElementById('comandaItens').textContent = itens;
+      document.getElementById('comandaTotal').textContent = total;
+      document.getElementById('comandaPagamento').textContent = pagamento;
+      
+      const agora = new Date();
+      document.getElementById('comandaDataHora').textContent = agora.toLocaleDateString('pt-BR') + ' - ' + agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+      modalComanda.classList.add('ativo');
+    }
+
+    function fecharComanda() {
+      modalComanda.classList.remove('ativo');
+    }
+
+    modalComanda.addEventListener('click', (e) => {
+      if (e.target === modalComanda) fecharComanda();
+    });
+
+    // DISPARO DE RESGATE DE CLIENTES FIÉIS
+    function dispararResgate(nome) {
+      const msg = encodeURIComponent(`Olá ${nome}! Notamos que faz alguns dias que você não saboreia nossos hambúrgueres artesanais. Preparamos um presente exclusivo: 15% OFF no seu próximo pedido com o cupom VOLTE15! Deseja ver o cardápio?`);
+      window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
+    }
+  </script>
+</body>
+</html>
